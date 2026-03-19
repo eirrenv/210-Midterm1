@@ -23,6 +23,35 @@ private:
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+    string getData(int pos) {
+        if (!head) {
+            cout << "List is empty." << endl;
+            return "";
+        }
+    
+        if (pos == 1) {
+            pop_front();
+            return "";
+        }
+    
+        Node* temp = head;
+    
+        for (int i = 1; i < pos; i++){
+            if (!temp) {
+                cout << "Position doesn't exist." << endl;
+                return "";
+            }
+            else
+                temp = temp->next;
+        }
+        if (!temp) {
+            cout << "Position doesn't exist." << endl;
+            return "";
+        }
+    
+        return temp->data;
+    }
+
     void insert_after(string value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
@@ -241,13 +270,30 @@ int main() {
     }
     line->printLine();
 
-    for (int i = 2; i < 21; ++i) {
+    for (int i = 0; i < 19; ++i) {
+        cout << "Time step #" << i + 2 << ":" << endl;
         value = rand() % 100 + 1;
-        if (value <= 60) {
+        if (value <= 40) {
+            cout << "\t" << line->getData(0) << " is served" << endl;
+            line->pop_front();
+        }
+        else if (value <= 100) {
             line->push_back(name);
-            cout << "\t\t" << name << " joined the line"
+            cout << "\t" << name << " joined the line" << endl;
             fin >> name;
         }
+        else if (value <= 120) {
+            // customer at end leaves
+            cout << "\t" << line->getData(5 + i) << " left the line" << endl;
+            line->pop_back();
+        }
+        else if (value <= 130) {
+            // random customer leaves
+        }
+        else if (value <=140) {
+            // VIP skips line
+        }
+        line->printLine();
 
     }
 
