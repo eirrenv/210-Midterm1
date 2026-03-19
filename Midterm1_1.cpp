@@ -96,44 +96,45 @@ public: // public information for class that can be used in main() function
                 cout << "Position doesn't exist." << endl; // print error and return
                 return;
             }
-            else
-                temp = temp->next;
+            else // if position is still within bounds
+                temp = temp->next; // move to next node in list
         }
-        if (!temp) {
-            cout << "Position doesn't exist." << endl;
+        if (!temp) { // if list has been iterated through completely and the position still is not in list
+            cout << "Position doesn't exist." << endl; // print error and exit function
             return;
         }
     
-        if (!temp->next) {
-            pop_back();
+        if (!temp->next) { // if position is at the end of list
+            pop_back(); // use the "pop_back()" function to delete list tail and exit function
             return;
         }
     
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        // if position is found in list
+        Node* tempPrev = temp->prev; // create new Node to hold the position of the node before the node to be deleted
+        tempPrev->next = temp->next; // point the prev node's next pointer to the node after the node to be deleted, skipping the node in the list
+        temp->next->prev = tempPrev; // set the next node's prev pointer to the node before the node to be deleted, connecting the list 
+        delete temp; // delete the node at the position
     }
 
-    void push_back(int v) {
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
-        else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+    void push_back(int v) { // append new Node with a value to the list, as if the list was a vector
+        Node* newNode = new Node(v); // create new Node
+        if (!tail) // if the list is empty, add node to list
+            head = tail = newNode; // set the head and tail pointers to the newNode as it is the only node in the list
+        else { // if the list is not empty
+            tail->next = newNode; // place the new Node at the back of the list, and point the tail's next pointer to the node to add it to the list
+            newNode->prev = tail; // set the new node's prev pointer to the tail to complete the connection
+            tail = newNode; // set the tail to the newNode pointer to set the newNode as the end of the list
         }
     }
     
-    void push_front(int v) {
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
-        else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+    void push_front(int v) { // append a new Node to the front of the list with a value
+        Node* newNode = new Node(v); // new Node to add
+        if (!head) // if list is empty
+            head = tail = newNode; // set newNode to head and tail, as explained previously
+        else { // if list has nodes
+            newNode->next = head; // set the new Node's next pointer to point at the current head node, placing it before the start of the list
+            head->prev = newNode; // set the head's prev pointer to the new Node, connecting the new Node to the list both ways
+            head = newNode; // set the head pointer to the newNode to set the new Node at front of the list
         }
     }
     
