@@ -108,27 +108,27 @@ public:
             return;
         }
     
-        if (pos == 1) {
-            pop_front();
-            return;
-        }
-    
         Node* temp = head;
     
-        for (int i = 1; i < pos; i++){
+        for (int i = 0; i < pos; i++){
+            temp = temp->next;
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
                 return;
             }
-            else
-                temp = temp->next;
         }
+        
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
-    
-        if (!temp->next) {
+        
+        if (temp == head) {
+            pop_front();
+            return;
+        }
+
+        if (temp == tail) {
             pop_back();
             return;
         }
@@ -272,7 +272,7 @@ int main() {
 
     for (int i = 0; i < 19; ++i) {
         cout << "Time step #" << i + 2 << ":" << endl;
-        value = rand() % 100 + 1;
+        value = rand() % 100;
         if (value <= 40 && lineLength > 0) {
             // customer at front gets helped
             cout << "\t" << line->getData(0) << " is served" << endl;
@@ -290,18 +290,18 @@ int main() {
         }
 
         value = rand() % 100 + 1;
-        if (value <= 20 && lineLength > 0) {
+        if (value <= 20 && lineLength > 1) {
             // customer at end leaves
             cout << "\t" << line->getData(lineLength - 1) << " (at the rear) left the line" << endl;
             --lineLength;
             line->pop_back();
         }
         value = rand() % 100 + 1;
-        if (value <= 10 && lineLength > 0) {
+        if (value <= 10 && lineLength > 1) {
             // random customer leaves
             random = rand() % lineLength;
             cout << "\t" << line->getData(random) << " left the line" << endl;
-            line->delete_pos(random + 1);
+            line->delete_pos(random);
             --lineLength;
             
         }
