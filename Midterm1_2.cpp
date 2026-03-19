@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -248,9 +249,12 @@ public:
 };
 
 int main() {
+    srand(time(0));
 
     DoublyLinkedList* line = new DoublyLinkedList();
     int value; 
+    int lineLength = 0;
+    int random;
 
     ifstream fin("names.txt");
 
@@ -266,29 +270,40 @@ int main() {
     for (int i = 0; i < 5; ++i) {
         line->push_front(name);
         cout << "\t" << name << " joins the line" << endl;
+        ++lineLength;
         fin >> name;
     }
     line->printLine();
 
     for (int i = 0; i < 19; ++i) {
         cout << "Time step #" << i + 2 << ":" << endl;
-        value = rand() % 100 + 1;
+        value = rand() % 140 + 1;
         if (value <= 40) {
+            // customer at front gets helped
             cout << "\t" << line->getData(0) << " is served" << endl;
             line->pop_front();
+            --lineLength;
         }
         else if (value <= 100) {
+            // new customer joins line
             line->push_back(name);
             cout << "\t" << name << " joined the line" << endl;
+            ++lineLength;
             fin >> name;
         }
         else if (value <= 120) {
             // customer at end leaves
-            cout << "\t" << line->getData(5 + i) << " left the line" << endl;
+            cout << "\t" << line->getData(lineLength) << " (at the rear) left the line" << endl;
+            --lineLength;
             line->pop_back();
         }
         else if (value <= 130) {
             // random customer leaves
+            random = rand() % lineLength + 1;
+            cout << "\t" << line->getData(random) << " left the line" << endl;
+            line->delete_pos(random);
+            --lineLength;
+            
         }
         else if (value <=140) {
             // VIP skips line
