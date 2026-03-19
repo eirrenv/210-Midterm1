@@ -1,6 +1,6 @@
 #include <iostream>
-#include <fstream>
-#include <ctime>
+#include <fstream> // for file input
+#include <ctime> // for RNG
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -24,6 +24,7 @@ private:
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+    // created a new function to grab the names of customers in the line, as well as make it easy to delete randomly
     string getData(int pos) {
         if (!head) {
             cout << "List is empty." << endl;
@@ -102,6 +103,7 @@ public:
         delete temp;
     }
 
+    // much difficulty with this one, modified to be indexed at 0
     void delete_pos(int pos) {
         if (!head) {
             cout << "List is empty." << endl;
@@ -227,7 +229,8 @@ public:
         }
         cout << endl;
     }
-
+    
+    // print shop line function, properly formatted
     void printLine() {
         Node* current = head;
         if (!current) {
@@ -244,23 +247,28 @@ public:
 };
 
 int main() {
-    srand(time(0));
+    srand(time(0)); // true RNG
 
-    DoublyLinkedList* line = new DoublyLinkedList();
+    DoublyLinkedList* line = new DoublyLinkedList(); // new doubly linked list
+
+    // variables holding random values and list length
     int value; 
     int lineLength = 0;
     int random;
 
-    ifstream fin("names.txt");
+    ifstream fin("names.txt"); // inputting randomized names file
 
+    // file error check
     if (!fin) {
         cout << "Error opening file!" << endl;
         return 1;
     }
 
-    string name;
+    // name gets pulled from list and added
+    string name; 
     fin >> name;
 
+    // first 5 guests
     cout << "Store opens:" << endl;
     for (int i = 0; i < 5; ++i) {
         line->push_back(name);
@@ -270,8 +278,12 @@ int main() {
     }
     line->printLine();
 
+    // time period loop
     for (int i = 0; i < 19; ++i) {
         cout << "Time step #" << i + 2 << ":" << endl;
+
+        // values are randomized before every probability check to have true randomness + multiple ops
+
         value = rand() % 100;
         if (value <= 40 && lineLength > 0) {
             // customer at front gets helped
@@ -292,16 +304,16 @@ int main() {
         value = rand() % 100 + 1;
         if (value <= 20 && lineLength > 1) {
             // customer at end leaves
-            cout << "\t" << line->getData(lineLength) << " (at the rear) left the line" << endl;
+            cout << "\t" << line->getData(lineLength - 1) << " (at the rear) left the line" << endl;
             line->pop_back();
             --lineLength;
         }
         value = rand() % 100 + 1;
-        if (value <= 40 && lineLength > 1) {
+        if (value <= 10 && lineLength > 1) {
             // random customer leaves
             random = rand() % lineLength;
-            cout << "\t" << line->getData(random) << " left the line" << endl;
-            line->delete_pos(random);
+            cout << "\t" << line->getData(random - 1) << " left the line" << endl;
+            line->delete_pos(random - 1);
             --lineLength; 
         }
         value = rand() % 100 + 1;
