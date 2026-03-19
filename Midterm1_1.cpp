@@ -43,55 +43,57 @@ public: // public information for class that can be used in main() function
             delete newNode;
             return;
         }
-
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
+        // if position is within the size of the linked list, insert new Node between the nodes
+        newNode->next = temp->next; // set the newNode's next pointer to be the next node
+        newNode->prev = temp; // set the newNode's prev pointer to the current temp node to insert the newNode
+        if (temp->next) // if there is another node after temp
+            temp->next->prev = newNode; // set the next node's prev pointer to point to the new Node
         else
-            tail = newNode;
-        temp->next = newNode;
+            tail = newNode; // if not, set the tail pointer to the new Node
+        temp->next = newNode; // set the current temp node's next pointer to the newNode instead of the node after newNode
     }
 
-    void delete_val(int value) {
-        if (!head) return;
+    void delete_val(int value) { // find and delete a node in the list with a specific value
+        if (!head) return; // if list is empty, exit function
 
-        Node* temp = head;
+        Node* temp = head; // create temp node to iterate through from beginning of list
         
-        while (temp && temp->data != value)
+        while (temp && temp->data != value) // iterate through list, checking if list contains the requested value
             temp = temp->next;
 
-        if (!temp) return; 
+        if (!temp) return; // if list does not contain value, exit function
 
-        if (temp->prev)
-            temp->prev->next = temp->next;
+        // list contains value, code for the deletion process
+
+        if (temp->prev) // if there is a node before the node to be deleted
+            temp->prev->next = temp->next; // set the prev node's next pointer to the node after the node to be deleted
+        else // if deleting at the head
+            head = temp->next; // set the head pointer to the node after the node to be deleted
+
+        if (temp->next) // if there is a node after the node to be deleted
+            temp->next->prev = temp->prev; // set the next node's prev pointer to the node before the node to be deleted
         else
-            head = temp->next; 
+            tail = temp->prev; // if there isn't a node after, set the tail pointer to point to the node before the node to be deleted
 
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
-
-        delete temp;
+        delete temp; // delete the node with the value
     }
 
-    void delete_pos(int pos) {
-        if (!head) {
-            cout << "List is empty." << endl;
+    void delete_pos(int pos) { // delete a node at a specific position in the list
+        if (!head) { // if list is empty
+            cout << "List is empty." << endl; // print error and return
             return;
         }
     
-        if (pos == 1) {
-            pop_front();
+        if (pos == 1) { // if the user chose the first position 
+            pop_front(); // use the "pop_front()" function to delete the head node and exit the function
             return;
         }
     
-        Node* temp = head;
+        Node* temp = head; // temp node to iterate through list without losing head pointer
     
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
-                cout << "Position doesn't exist." << endl;
+        for (int i = 1; i < pos; i++){ // loop to confirm position is within list bounds
+            if (!temp) { // if the position exceeds the list size
+                cout << "Position doesn't exist." << endl; // print error and return
                 return;
             }
             else
