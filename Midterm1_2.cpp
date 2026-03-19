@@ -117,7 +117,7 @@ public:
                 return;
             }
         }
-        
+
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
@@ -263,7 +263,7 @@ int main() {
 
     cout << "Store opens:" << endl;
     for (int i = 0; i < 5; ++i) {
-        line->push_front(name);
+        line->push_back(name);
         cout << "\t" << name << " joins the line" << endl;
         ++lineLength;
         fin >> name;
@@ -292,18 +292,27 @@ int main() {
         value = rand() % 100 + 1;
         if (value <= 20 && lineLength > 1) {
             // customer at end leaves
-            cout << "\t" << line->getData(lineLength - 1) << " (at the rear) left the line" << endl;
-            --lineLength;
+            cout << "\t" << line->getData(lineLength) << " (at the rear) left the line" << endl;
             line->pop_back();
+            --lineLength;
         }
         value = rand() % 100 + 1;
         if (value <= 10 && lineLength > 1) {
             // random customer leaves
             random = rand() % lineLength;
-            cout << "\t" << line->getData(random) << " left the line" << endl;
-            line->delete_pos(random);
-            --lineLength;
-            
+            if (random == 0) {
+                cout << "\t" << line->getData(0) << " left the line" << endl;
+                line->pop_front();
+            }
+            else if (random == lineLength - 1){
+                cout << "\t" << line->getData(lineLength - 1) << " left the line" << endl;
+                line->pop_back();
+            }
+            else {
+                cout << "\t" << line->getData(random) << " left the line" << endl;
+                line->delete_pos(random);
+            }
+            --lineLength; 
         }
         value = rand() % 100 + 1;
         if (value <= 10 && lineLength > 0) {
