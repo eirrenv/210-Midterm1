@@ -198,9 +198,26 @@ public: // public information for class that can be used in main() function
             cout << "List is empty." << endl; // print noti and exit function
             return;
         }
-        while (current) { // while 
-            cout << current->data << " ";
-            current = current->prev;
+        while (current) { // iterate through list until reaching the front
+            cout << current->data << " "; // print value in node and space
+            current = current->prev; // move to node before current node
+        }
+        cout << endl; // new line
+    }
+
+    void every_other_element() { // print every other node in a list, starting from the first node
+        Node* current = head; // set iterator to beginning of list
+        int count = 0; // counter to skip every other node
+        
+        if (!head) { // if the list is empty, return noti and exit function
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        while (current) { // while there are still nodes to iterate through in the list
+            if (count % 2 != 0) { // checking if node in list is odd
+                cout << count + 1 << " Position in list: " << current->data << " "; // print the data of the node in the list
+            }
         }
         cout << endl;
     }
