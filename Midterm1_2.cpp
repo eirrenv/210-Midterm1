@@ -30,11 +30,6 @@ public:
             return "";
         }
     
-        if (pos == 1) {
-            pop_front();
-            return "";
-        }
-    
         Node* temp = head;
     
         for (int i = 1; i < pos; i++){
@@ -284,35 +279,41 @@ int main() {
             line->pop_front();
             --lineLength;
         }
-        else if (value <= 100) {
+
+        value = rand() % 100 + 1;
+        if (value <= 60) {
             // new customer joins line
             line->push_back(name);
             cout << "\t" << name << " joined the line" << endl;
             ++lineLength;
             fin >> name;
         }
+
         value = rand() % 100 + 1;
         if (value <= 20 && lineLength > 0) {
             // customer at end leaves
-            cout << "\t" << line->getData(lineLength) << " (at the rear) left the line" << endl;
+            cout << "\t" << line->getData(lineLength - 1) << " (at the rear) left the line" << endl;
             --lineLength;
             line->pop_back();
         }
-        else if (value <= 30 && lineLength > 0) {
+        value = rand() % 100 + 1;
+        if (value <= 10 && lineLength > 0) {
             // random customer leaves
-            random = rand() % lineLength + 1;
+            random = rand() % lineLength;
             cout << "\t" << line->getData(random) << " left the line" << endl;
-            line->delete_pos(random);
+            line->delete_pos(random + 1);
             --lineLength;
             
         }
-        else if (value <= 40 && lineLength > 0) {
+        value = rand() % 100 + 1;
+        if (value <= 10 && lineLength > 0) {
             // VIP skips line
             line->push_front(name + " (VIP)");
             cout << "\t" << line->getData(0) << " joins the front of the line" << endl;
             ++lineLength;
             fin >> name;
         }
+        cout << "lineLength: " << lineLength << endl;
         line->printLine();
 
     }
