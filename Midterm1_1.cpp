@@ -138,67 +138,67 @@ public: // public information for class that can be used in main() function
         }
     }
     
-    void pop_front() {
+    void pop_front() { // delete node at front of list
 
-        if (!head) {
+        if (!head) { // if list empty, print error and exit function
             cout << "List is empty." << endl;
             return;
         }
 
-        Node * temp = head;
+        Node * temp = head; // temp node to start from head of list
 
-        if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+        if (head->next) { // if there is a node after the first node in list
+            head = head->next; // set head node to the next node
+            head->prev = nullptr; // set the next node's prev pointer to a nullptr instead of the prev node
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if there is only one node
+            head = tail = nullptr; // set head and tail to nullptr to remove pointers to the node
+        delete temp; // delete node
     }
 
-    void pop_back() {
-        if (!tail) {
-            cout << "List is empty." << endl;
+    void pop_back() { // delete node at back of list
+        if (!tail) { // if there is no tail pointer
+            cout << "List is empty." << endl; // return error and exit function
             return;
         }
-        Node * temp = tail;
+        Node * temp = tail; // tmep node to start from end of list
 
-        if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+        if (tail->prev) { // if there is a node before the last node
+            tail = tail->prev; // set the tail pointer to the node before the node to be deleted
+            tail->next = nullptr; // set the next pointer to a nullptr instead of the node to be deleted
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if there is only one node 
+            head = tail = nullptr; // set head and tail to nullptr to stop them from pointing to the node
+        delete temp; // delete node
     }
 
-    ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+    ~DoublyLinkedList() { // destructor to delete list after program has completed
+        while (head) { // while nodes still exist in list
+            Node* temp = head; // set temp node to front of list
+            head = head->next; // move head pointer to next node in list
+            delete temp; // delete front of list
         }
     }
-    void print() {
-        Node* current = head;
-        if (!current) {
-            cout << "List is empty." << endl;
+    void print() { // print the whole list from front to back
+        Node* current = head; // new pointer for iterating from start of list
+        if (!current) { // if list is emppty
+            cout << "List is empty." << endl; // print notification and exit function
+            return;
+        } 
+        while (current) { // iterate through list until reaching a nullptr (end of the list)
+            cout << current->data << " "; // print value in node then a space
+            current = current->next; // move to next node
+        }
+        cout << endl; // new line for cleanliness :)
+    }
+
+    void print_reverse() { // print list from back to front
+        Node* current = tail; // new pointer for iterating from end of list
+        if (!current) { // if list is empty
+            cout << "List is empty." << endl; // print noti and exit function
             return;
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
-        }
-        cout << endl;
-    }
-
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
-            cout << "List is empty." << endl;
-            return;
-        }
-        while (current) {
+        while (current) { // while 
             cout << current->data << " ";
             current = current->prev;
         }
