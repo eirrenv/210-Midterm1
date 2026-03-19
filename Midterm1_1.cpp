@@ -215,22 +215,35 @@ public: // public information for class that can be used in main() function
         }
 
         while (current) { // while there are still nodes to iterate through in the list
-            if (count % 2 != 0) { // checking if node in list is odd
-                cout << count + 1 << " Position in list: " << current->data << " "; // print the data of the node in the list
+            if (count % 2 == 0) { // checking if node in list is odd, fixed
+                cout <<  current->data << " "; // print the data of the node in the list, 
+                // removed extra print statements to clean up 
             }
+            // forgot to add list iterators lol
+            current = current->next;
+            ++count;
         }
         cout << endl;
     }
 };
 
 int main() {
-    DoublyLinkedList* list = new DoublyLinkedList();
+    DoublyLinkedList* list = new DoublyLinkedList(); // creating new linked list
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 20; ++i) { // creating test list, looping 20 times to test 20 node list
         list->push_back(rand() % (MAX_NR - MIN_NR + 1) + MIN_NR);
     }
     cout << "Printing full list: " << endl;
-    list->print();
-    
+    list->print(); // printing to show current list 
+    cout << "every_other_element() test:" << endl; // test to compare lists
+    list->every_other_element(); // test printing every other node in list
+
+    /* test example
+    Printing full list: 
+    83 26 37 35 33 35 56 22 79 11 42 77 60 89 33 86 70 46 62 56 
+    every_other_element() test:
+    83 37 33 56 79 42 60 33 70 62 
+    */
+
     return 0;
 }
