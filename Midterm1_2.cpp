@@ -32,7 +32,7 @@ public:
     
         Node* temp = head;
     
-        for (int i = 1; i < pos; i++){
+        for (int i = 0; i < pos; i++){
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
                 return "";
@@ -297,21 +297,11 @@ int main() {
             --lineLength;
         }
         value = rand() % 100 + 1;
-        if (value <= 10 && lineLength > 1) {
+        if (value <= 40 && lineLength > 1) {
             // random customer leaves
             random = rand() % lineLength;
-            if (random == 0) {
-                cout << "\t" << line->getData(0) << " left the line" << endl;
-                line->pop_front();
-            }
-            else if (random == lineLength - 1){
-                cout << "\t" << line->getData(lineLength - 1) << " left the line" << endl;
-                line->pop_back();
-            }
-            else {
-                cout << "\t" << line->getData(random) << " left the line" << endl;
-                line->delete_pos(random);
-            }
+            cout << "\t" << line->getData(random) << " left the line" << endl;
+            line->delete_pos(random);
             --lineLength; 
         }
         value = rand() % 100 + 1;
@@ -322,7 +312,6 @@ int main() {
             ++lineLength;
             fin >> name;
         }
-        cout << "lineLength: " << lineLength << endl;
         line->printLine();
 
     }
