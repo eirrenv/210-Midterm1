@@ -204,8 +204,7 @@ public:
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
-
+    int value = value = rand() % 100 + 1;
     
     return 0;
 }
