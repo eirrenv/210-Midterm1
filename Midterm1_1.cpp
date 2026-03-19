@@ -224,8 +224,13 @@ public: // public information for class that can be used in main() function
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    DoublyLinkedList* list = new DoublyLinkedList();
 
+    for (int i = 0; i < 10; ++i) {
+        list->push_back(rand() % (MAX_NR - MIN_NR + 1) + MIN_NR);
+    }
+    cout << "Printing full list: " << endl;
+    list->print();
     
     return 0;
 }
