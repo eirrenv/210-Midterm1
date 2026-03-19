@@ -277,8 +277,8 @@ int main() {
 
     for (int i = 0; i < 19; ++i) {
         cout << "Time step #" << i + 2 << ":" << endl;
-        value = rand() % 140 + 1;
-        if (value <= 40) {
+        value = rand() % 100 + 1;
+        if (value <= 40 && lineLength > 0) {
             // customer at front gets helped
             cout << "\t" << line->getData(0) << " is served" << endl;
             line->pop_front();
@@ -291,13 +291,14 @@ int main() {
             ++lineLength;
             fin >> name;
         }
-        else if (value <= 120) {
+        value = rand() % 100 + 1;
+        if (value <= 20 && lineLength > 0) {
             // customer at end leaves
             cout << "\t" << line->getData(lineLength) << " (at the rear) left the line" << endl;
             --lineLength;
             line->pop_back();
         }
-        else if (value <= 130) {
+        else if (value <= 30 && lineLength > 0) {
             // random customer leaves
             random = rand() % lineLength + 1;
             cout << "\t" << line->getData(random) << " left the line" << endl;
@@ -305,8 +306,12 @@ int main() {
             --lineLength;
             
         }
-        else if (value <=140) {
+        else if (value <= 40 && lineLength > 0) {
             // VIP skips line
+            line->push_front(name + " (VIP)");
+            cout << "\t" << line->getData(0) << " joins the front of the line" << endl;
+            ++lineLength;
+            fin >> name;
         }
         line->printLine();
 
