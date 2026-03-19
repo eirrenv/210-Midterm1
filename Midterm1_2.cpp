@@ -209,8 +209,9 @@ public:
             cout << "List is empty." << endl;
             return;
         }
+        cout << "\tResulting line:" << endl;
         while (current) {
-            cout << "\t" << current->data << " joins the line" << endl;
+            cout << "\t\t" << current->data << endl;
             current = current->next;
         }
         cout << endl;
@@ -220,7 +221,7 @@ public:
 int main() {
 
     DoublyLinkedList* line = new DoublyLinkedList();
-    int value = value = rand() % 100 + 1;
+    int value; 
 
     ifstream fin("names.txt");
 
@@ -228,16 +229,27 @@ int main() {
         cout << "Error opening file!" << endl;
         return 1;
     }
-    
+
     string name;
     fin >> name;
 
     cout << "Store opens:" << endl;
     for (int i = 0; i < 5; ++i) {
         line->push_front(name);
+        cout << "\t" << name << " joins the line" << endl;
         fin >> name;
     }
     line->printLine();
+
+    for (int i = 2; i < 21; ++i) {
+        value = rand() % 100 + 1;
+        if (value <= 60) {
+            line->push_back(name);
+            cout << "\t\t" << name << " joined the line"
+            fin >> name;
+        }
+
+    }
 
     fin.close();
     return 0;
